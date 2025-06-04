@@ -4,13 +4,16 @@ FROM n8nio/n8n:${N8N_VERSION}
 
 USER root
 
-# Install Python and build tools needed for node-gyp
-RUN apt-get update && \
-    apt-get install -y python3 make g++ build-essential && \
-    npm config set python $(which python3) && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install Python and build tools using apk (Alpine's package manager)
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    make \
+    g++ \
+    bash \
+    && npm config set python $(which python3)
 
+# Copy and set permissions on your custom entrypoint
 COPY ./entrypoint.sh /custom-entrypoint.sh
 RUN chmod +x /custom-entrypoint.sh
 
@@ -18,4 +21,3 @@ ENV SHELL=/bin/sh
 USER node
 
 ENTRYPOINT ["/custom-entrypoint.sh"]
-
