@@ -10,8 +10,7 @@ RUN apk add --no-cache \
     py3-pip \
     make \
     g++ \
-    bash \
-    && npm config set python $(which python3)
+    bash 
 
 # Copy and set permissions on your custom entrypoint
 COPY ./entrypoint.sh /custom-entrypoint.sh
