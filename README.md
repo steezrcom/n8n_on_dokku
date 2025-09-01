@@ -1,6 +1,6 @@
 ![](.github/images/repo_header.png)
 
-[![n8n](https://img.shields.io/badge/n8n-1.95.3-blue.svg)](https://github.com/n8n-io/n8n/releases/tag/n8n%401.95.3)
+[![n8n](https://img.shields.io/badge/n8n-1.108.2-blue.svg)](https://github.com/n8n-io/n8n/releases/tag/n8n%401.108.2)
 [![Dokku](https://img.shields.io/badge/Dokku-Repo-blue.svg)](https://github.com/dokku/dokku)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/d1ceward-on-dokku/minio_on_dokku/graphs/commit-activity)
 # Run n8n on Dokku
@@ -65,7 +65,17 @@ Set the webhook URL for your n8n instance:
 dokku config:set n8n WEBHOOK_URL=http://n8n.example.com
 ```
 
-### 3. Configure the Domain and Ports
+### 3. Configure Persistent Storage
+
+To persist data between restarts (like community nodes, logs, etc...), create a folder on the host machine and mount it to the app container:
+
+```bash
+dokku storage:ensure-directory n8n --chown false
+chown 1000:1000 /var/lib/dokku/data/storage/n8n
+dokku storage:mount n8n /var/lib/dokku/data/storage/n8n:/home/node/.n8n
+```
+
+### 4. Configure the Domain and Ports
 
 Set the domain for your app to enable routing:
 
@@ -79,7 +89,7 @@ Map the internal port `5678` to the external port `80`:
 dokku ports:set n8n http:80:5678
 ```
 
-### 4. Deploy the App
+### 5. Deploy the App
 
 You can deploy the app to your Dokku server using one of the following methods:
 
@@ -118,7 +128,7 @@ If you prefer to work with the repository locally, you can clone it to your mach
 
 Choose the method that best suits your workflow.
 
-### 5. Enable SSL (Optional)
+### 6. Enable SSL (Optional)
 
 Secure your app with an SSL certificate from Let's Encrypt:
 
