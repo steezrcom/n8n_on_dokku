@@ -11,7 +11,8 @@ RUN apk add --no-cache \
     make \
     g++ \
     bash \
-    graphicsmagick
+    graphicsmagick \
+    ghostscript
 
 # Copy and set permissions on your custom entrypoint
 COPY ./entrypoint.sh /custom-entrypoint.sh
