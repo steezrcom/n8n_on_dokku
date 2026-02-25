@@ -1,10 +1,17 @@
 ARG N8N_VERSION="2.8.4"
 
+# n8n 2.x uses a hardened Alpine image with apk removed — restore it from a stock Alpine image
+FROM alpine:3.23 AS alpine
+
 FROM n8nio/n8n:${N8N_VERSION}
 
 USER root
 
-# Install Python, build tools, and GraphicsMagick using apk (Alpine's package manager)
+# Restore apk package manager (removed in n8n 2.x hardened image)
+COPY --from=alpine /sbin/apk /sbin/apk
+COPY --from=alpine /usr/lib/libapk.so* /usr/lib/
+
+# Install Python, build tools, and GraphicsMagick
 RUN apk add --no-cache \
     python3 \
     py3-pip \
