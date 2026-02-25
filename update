@@ -12,20 +12,13 @@ echo -e "\033[0;32m====>\033[0m Initial check..."
 CURRENT_RELEASE=$(git tag --sort=version:refname | tail -1)
 
 
-# Get the highest 1.x.x release name (ignore 2.x.x and above)
+# Get the highest stable release name (exclude pre-release versions like -exp, -rc, etc.)
 RELEASE=$(curl -s https://api.github.com/repos/n8n-io/n8n/releases?per_page=100 \
-  | jq -r '.[].tag_name' \
+  | jq -r '.[] | select(.prerelease == false) | .tag_name' \
   | sed 's/n8n@//g; s/\"//g' \
-  | grep -E '^1\.[0-9]+\.[0-9]+$' \
+  | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' \
   | sort -V \
   | tail -1)
-
-
-# Prevent upgrade to 2.x.x or higher
-if [[ $RELEASE =~ ^2\.|^[3-9]\.|^[1-9][0-9]+\. ]]; then
-  echo -e "\033[0;31mERROR:\033[0m Upgrade to n8n version $RELEASE is not allowed. Only 1.x.x versions are supported."
-  exit 1
-fi
 
 # Exit script if already up to date
 if [ "$RELEASE" = "$CURRENT_RELEASE" ]; then

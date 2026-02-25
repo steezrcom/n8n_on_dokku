@@ -1,10 +1,8 @@
 ![](.github/images/repo_header.png)
 
-[![n8n](https://img.shields.io/badge/n8n-1.123.21-blue.svg)](https://github.com/n8n-io/n8n/releases/tag/n8n%401.123.21)
+[![n8n](https://img.shields.io/badge/n8n-2.8.4-blue.svg)](https://github.com/n8n-io/n8n/releases/tag/n8n%402.8.4)
 [![Dokku](https://img.shields.io/badge/Dokku-Repo-blue.svg)](https://github.com/dokku/dokku)
 # Run n8n on Dokku
-
-> **⚠️ Important: This project currently supports only n8n 1.x.x. Upgrading to n8n 2.x.x is not yet possible here, as version 2.x.x requires a separate Docker runner container. Contributions to add 2.x.x support are welcome!**
 
 ## Overview
 

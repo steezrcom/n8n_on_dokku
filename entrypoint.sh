@@ -42,4 +42,7 @@ if [ -d /opt/custom-certificates ]; then
   c_rehash /opt/custom-certificates
 fi
 
+# Ensure task runners are enabled (required for n8n 2.x)
+export N8N_RUNNERS_ENABLED="${N8N_RUNNERS_ENABLED:-true}"
+
 exec n8n
